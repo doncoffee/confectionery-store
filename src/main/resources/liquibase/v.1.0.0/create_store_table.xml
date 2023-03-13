@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-store-table-liquibase" author="doncoffee">
+        <sql>
+            create table `confectionery-store`.store
+            (
+                store_id        int auto_increment
+                    primary key,
+                address_id      int null,
+                phone_number_id int null,
+                constraint FKaiuyyh4m9r3w97ah6d3gqhb20
+                    foreign key (phone_number_id) references `confectionery-store`.phone_number (phone_number_id),
+                constraint FKp2sen6ouwnlht537csk0kip90
+                    foreign key (address_id) references `confectionery-store`.address (address_id)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

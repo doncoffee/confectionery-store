@@ -7,15 +7,94 @@
   <version>1.0-SNAPSHOT</version>
   <name>confectionery-store Maven Webapp</name>
   <url>http://maven.apache.org</url>
+
+  <properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <junit.version>5.9.2</junit.version>
+    <liquibase.version>4.19.0</liquibase.version>
+    <mysql-connector-j.version>8.0.31</mysql-connector-j.version>
+    <hibernate-core.version>6.1.7.Final</hibernate-core.version>
+    <jakarta.servlet-api.version>4.0.4</jakarta.servlet-api.version>
+    <lombok.version>1.18.24</lombok.version>
+    <jstl.version>1.2</jstl.version>
+  </properties>
+
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.liquibase</groupId>
+      <artifactId>liquibase-core</artifactId>
+      <version>${liquibase.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.mysql</groupId>
+      <artifactId>mysql-connector-j</artifactId>
+      <version>${mysql-connector-j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hibernate</groupId>
+      <artifactId>hibernate-core</artifactId>
+      <version>${hibernate-core.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>jakarta.servlet</groupId>
+      <artifactId>jakarta.servlet-api</artifactId>
+      <version>${jakarta.servlet-api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>${lombok.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>jstl</groupId>
+      <artifactId>jstl</artifactId>
+      <version>${jstl.version}</version>
+    </dependency>
   </dependencies>
+
   <build>
-    <finalName>confectionery-store</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.liquibase</groupId>
+        <artifactId>liquibase-maven-plugin</artifactId>
+        <version>${liquibase.version}</version>
+        <configuration>
+          <propertyFile>src/main/resources/liquibase/liquibase.properties</propertyFile>
+          <changeLogFile>src/main/resources/liquibase/db.changelog-master.xml</changeLogFile>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>update</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>3.3.1</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+      </plugin>
+    </plugins>
   </build>
 </project>
