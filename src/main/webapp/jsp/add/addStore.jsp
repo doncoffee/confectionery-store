@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="by.academy.controller.CommandInvoker " %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
-    <title>Confectionery store</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <title>New store</title>
+    <link rel="stylesheet" href="./../../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <div class="header">
@@ -17,23 +20,33 @@
     <a href="home?command=read_address">Addresses</a>
     <a href="home?command=read_phone_number">Contacts</a>
 </div>
-<div class="catalog-name">
-    <h1>Product catalog</h1>
-</div>
-
-<div class="catalog">
-    <a class="item" href="home?command=read_chocolate">
-        <img src="./images/shocolate.png" alt="">
-        <span>Chocolate</span>
-    </a>
-    <a class="item" href="home?command=read_cookie">
-        <img src="./images/cookie.png" alt="">
-        <span>Cookies</span>
-    </a>
-    <a class="item" href="home?command=read_sweets">
-        <img src="./images/candies.png" alt="">
-        <span>Sweets</span>
-    </a>
+<div class="block">
+    <h2 class="catalog-name">Add store</h2>
+    <form method="post" action="home">
+        <input type="hidden" name="command" value="create_store">
+        <div>
+            <label class="input">Address:
+                <div>
+                    <select class="form-control input" id="addressId" name="addressId" required>
+                        <c:forEach var="address" items="${requestScope.addresses}">
+                            <option value="${address.id}">${address.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </label>
+            <label class="input">Phone number:
+                <div>
+                    <select class="form-control input" id="phoneNumberId" name="phoneNumberId" required>
+                        <c:forEach var="phoneNumber" items="${requestScope.phoneNumbers}">
+                            <option value="${phoneNumber.id}">${phoneNumber.number}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+            </label>
+        </div>
+        <button class="btn btn-default" type="submit" name="command" value="create_store">CREATE STORE</button>
+        <a class="btn btn-default" href="home?command=read_store">CANCEL</a>
+    </form>
 </div>
 <footer class="footer">
     <div class="wrap wrap__footer">
@@ -91,5 +104,6 @@
 
     </div>
 </footer>
+
 </body>
 </html>

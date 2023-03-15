@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-cookie-table-liquibase" author="doncoffee">
+        <sql>
+            create table `confectionery-store`.cookie
+            (
+                cookie_id   int auto_increment
+                    primary key,
+                composition varchar(255) null,
+                price       double       null,
+                type        varchar(255) null,
+                weight      double       null,
+                brand_id    int          null,
+                store_id    int          null,
+                supplier_id int          null,
+                constraint FK937f7f0oa718h8ojphqj7s2el
+                    foreign key (supplier_id) references `confectionery-store`.supplier (store_id),
+                constraint FKb570r21t4nrkvi65nkuj5weva
+                    foreign key (brand_id) references `confectionery-store`.brand (brand_id),
+                constraint FKbvb3nai0jv5cgsxpi8fv7x5lt
+                    foreign key (store_id) references `confectionery-store`.store (store_id)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

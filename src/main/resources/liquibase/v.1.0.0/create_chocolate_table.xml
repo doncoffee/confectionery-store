@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-chocolate-table-liquibase" author="doncoffee">
+        <sql>
+            create table `confectionery-store`.chocolate
+            (
+                chocolate_id int auto_increment
+                    primary key,
+                composition  varchar(255) null,
+                price        double       null,
+                type         varchar(255) null,
+                weight       double       null,
+                brand_id     int          null,
+                store_id     int          null,
+                supplier_id  int          null,
+                constraint FKjb5hiob5xg4c2wwx996f0ty3b
+                    foreign key (store_id) references `confectionery-store`.store (store_id),
+                constraint FKjf33m89uq66m8arybf9pf1xpa
+                    foreign key (supplier_id) references `confectionery-store`.supplier (store_id),
+                constraint FKmvi446s1ako98d9vlswg8lg87
+                    foreign key (brand_id) references `confectionery-store`.brand (brand_id)
+            );
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
