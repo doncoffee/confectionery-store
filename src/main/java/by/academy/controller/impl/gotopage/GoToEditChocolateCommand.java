@@ -1,6 +1,8 @@
 package by.academy.controller.impl.gotopage;
 
 import by.academy.controller.Command;
+import by.academy.controller.extractor.Extractor;
+import by.academy.controller.extractor.impl.ChocolateExtractor;
 import by.academy.service.BrandService;
 import by.academy.service.ChocolateService;
 import by.academy.service.StoreService;
@@ -18,21 +20,23 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class GoToEditChocolateCommand implements Command {
+    private final ChocolateService service = new ChocolateServiceImpl();
+    private final Extractor<ChocolateDTO> extractor = new ChocolateExtractor();
+    private final BrandService brandService = new BrandServiceImpl();
+    private final StoreService storeService = new StoreServiceImpl();
+    private final SupplierService supplierService = new SupplierServiceImpl();
     @Override
     public String execute(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        ChocolateService service = new ChocolateServiceImpl();
-        BrandService brandService = new BrandServiceImpl();
-        StoreService storeService = new StoreServiceImpl();
-        SupplierService supplierService = new SupplierServiceImpl();
         List<BrandDTO> brandList = brandService.readAllBrands();
-        request.setAttribute("brands", brandList);
         List<StoreDTO> storeList = storeService.readAllStores();
-        request.setAttribute("stores", storeList);
         List<SupplierDTO> supplierList = supplierService.readAllSuppliers();
-        request.setAttribute("suppliers", supplierList);
         ChocolateDTO chocolateDTO = service.selectChocolateById(id);
+        request.setAttribute("brands", brandList);
+        request.setAttribute("stores", storeList);
+        request.setAttribute("suppliers", supplierList);
         request.setAttribute("chocolate", chocolateDTO);
+        extractor.extract(request);
         return "/jsp/edit/editChocolate.jsp";
     }
 }

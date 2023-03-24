@@ -1,21 +1,22 @@
 package by.academy.controller.impl.delete;
 
 import by.academy.controller.Command;
+import by.academy.controller.extractor.Extractor;
+import by.academy.controller.extractor.impl.CookieExtractor;
 import by.academy.service.CookieService;
 import by.academy.service.dto.CookieDTO;
 import by.academy.service.impl.CookieServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class DeleteCookieCommand implements Command {
+    private final CookieService service = new CookieServiceImpl();
+    private final Extractor<CookieDTO> extractor = new CookieExtractor();
     @Override
     public String execute(HttpServletRequest request) {
-        CookieService cookieService = new CookieServiceImpl();
         int id = Integer.parseInt(request.getParameter("id"));
-        cookieService.deleteCookie(id);
-        List<CookieDTO> list = cookieService.readAllCookies();
-        request.setAttribute("cookies", list);
+        service.deleteCookie(id);
+        extractor.extract(request);
         return "/jsp/lists/cookies.jsp";
     }
 }

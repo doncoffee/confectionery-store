@@ -25,6 +25,8 @@
     <form method="post" action="home">
         <input type="hidden" name="command" value="update_store">
         <input type="hidden" name="id" value=${requestScope.store.id}>
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Address:
                 <div>
@@ -46,7 +48,7 @@
             </label>
         </div>
         <button class="btn btn-default" type="submit" name="command" value="update_store">UPDATE STORE</button>
-        <a class="btn btn-default" href="home?command=read_store">CANCEL</a>
+        <button class="btn btn-default" type="submit" name="command" value="update_store">CANCEL</button>
     </form>
 </div>
 <footer class="footer">

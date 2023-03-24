@@ -14,4 +14,8 @@ public interface ChocolateService {
     void deleteChocolate(int id);
 
     ChocolateDTO selectChocolateById(int id);
+
+    List<ChocolateDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+
+    Integer getNumberOfRows();
 }

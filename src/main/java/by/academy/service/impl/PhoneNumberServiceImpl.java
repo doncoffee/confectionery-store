@@ -45,4 +45,17 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
         PhoneNumber phoneNumber = dao.selectById(id);
         return mapper.mapToDTO(phoneNumber);
     }
+
+    @Override
+    public List<PhoneNumberDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
+        return dao.findAllByPage(currentPage, recordsPerPage)
+                .stream()
+                .map(map ->mapper.mapToDTO(map))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        return dao.getNumberOfRows();
+    }
 }

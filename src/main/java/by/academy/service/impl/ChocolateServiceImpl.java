@@ -45,4 +45,17 @@ public class ChocolateServiceImpl implements ChocolateService {
         Chocolate chocolate = dao.selectById(id);
         return mapper.mapToDTO(chocolate);
     }
+
+    @Override
+    public List<ChocolateDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
+        return dao.findAllByPage(currentPage, recordsPerPage)
+                .stream()
+                .map(map ->mapper.mapToDTO(map))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        return dao.getNumberOfRows();
+    }
 }

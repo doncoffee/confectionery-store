@@ -24,30 +24,32 @@
     <h2 class="catalog-name">Edit sweets</h2>
     <form method="post" action="home">
         <input type="hidden" name="command" value="update_sweets">
-        <input type="hidden" name="id" value=${requestScope.sweets.id}>
+        <input type="hidden" name="id" value=${requestScope.sweet.id}>
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Price:
                 <div>
                     <input class="form-control input" id="priceInput" placeholder="Enter price" type="text" name="price"
-                           value="${requestScope.sweets.price}">
+                           value="${requestScope.sweet.price}">
                 </div>
             </label>
             <label class="input">Type:
                 <div>
                     <input class="form-control input" id="typeInput" type="text" placeholder='Enter type' name="type"
-                           value="${requestScope.sweets.type}">
+                           value="${requestScope.sweet.type}">
                 </div>
             </label>
             <label class="input">Weight:
                 <div>
                     <input class="form-control input" id="weightInput" type="text" placeholder='Enter weight' name="weight"
-                           value="${requestScope.sweets.weight}">
+                           value="${requestScope.sweet.weight}">
                 </div>
             </label>
             <label class="input">Composition:
                 <div>
                     <input class="form-control input" id="compositionInput" type="text" placeholder='Enter composition' name="composition"
-                           value="${requestScope.sweets.composition}">
+                           value="${requestScope.sweet.composition}">
                 </div>
             </label>
             <label class="input">Brand:
@@ -79,7 +81,7 @@
             </label>
         </div>
         <button class="btn btn-default" type="submit" name="command" value="update_sweets">UPDATE SWEETS</button>
-        <a class="btn btn-default" href="home?command=read_sweets">CANCEL</a>
+        <button class="btn btn-default" type="submit" name="command" value="update_sweets">CANCEL</button>
     </form>
 </div>
 <footer class="footerNP">

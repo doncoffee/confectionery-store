@@ -12,4 +12,8 @@ public interface DAO<T> {
     void delete(int id);
 
     T selectById(int id);
+
+    List<T> findAllByPage(Integer currentPage, Integer itemsPerPage);
+
+    Integer getNumberOfRows();
 }

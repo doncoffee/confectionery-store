@@ -1,19 +1,17 @@
 package by.academy.controller.impl.read;
 
 import by.academy.controller.Command;
-import by.academy.service.PhoneNumberService;
+import by.academy.controller.extractor.Extractor;
+import by.academy.controller.extractor.impl.PhoneNumberExtractor;
 import by.academy.service.dto.PhoneNumberDTO;
-import by.academy.service.impl.PhoneNumberServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class ReadPhoneNumberCommand implements Command {
+    private final Extractor<PhoneNumberDTO> extractor = new PhoneNumberExtractor();
     @Override
     public String execute(HttpServletRequest request) {
-        PhoneNumberService service = new PhoneNumberServiceImpl();
-        List<PhoneNumberDTO> list = service.readAllPhoneNumbers();
-        request.setAttribute("phoneNumbers", list);
+        extractor.extract(request);
         return "/jsp/lists/phoneNumbers.jsp";
     }
 }

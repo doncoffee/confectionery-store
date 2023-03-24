@@ -14,4 +14,8 @@ public interface BrandService {
     void deleteBrand(int id);
 
     BrandDTO selectBrandById(int id);
+
+    List<BrandDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+
+    Integer getNumberOfRows();
 }

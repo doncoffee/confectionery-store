@@ -14,4 +14,8 @@ public interface SweetsService {
     void deleteSweets(int id);
 
     SweetsDTO selectSweetsById(int id);
+
+    List<SweetsDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+
+    Integer getNumberOfRows();
 }

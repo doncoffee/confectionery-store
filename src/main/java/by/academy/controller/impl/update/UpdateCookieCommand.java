@@ -1,25 +1,19 @@
 package by.academy.controller.impl.update;
 
 import by.academy.controller.Command;
-import by.academy.entity.Chocolate;
-import by.academy.entity.Cookie;
-import by.academy.service.BrandService;
+import by.academy.controller.extractor.Extractor;
+import by.academy.controller.extractor.impl.CookieExtractor;
 import by.academy.service.CookieService;
-import by.academy.service.StoreService;
-import by.academy.service.SupplierService;
 import by.academy.service.dto.CookieDTO;
-import by.academy.service.impl.BrandServiceImpl;
 import by.academy.service.impl.CookieServiceImpl;
-import by.academy.service.impl.StoreServiceImpl;
-import by.academy.service.impl.SupplierServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class UpdateCookieCommand implements Command {
+    private final CookieService service = new CookieServiceImpl();
+    private final Extractor<CookieDTO> extractor = new CookieExtractor();
     @Override
     public String execute(HttpServletRequest request) {
-        CookieService cookieService = new CookieServiceImpl();
         int brandId = Integer.parseInt(request.getParameter("brandId"));
         int storeId = Integer.parseInt(request.getParameter("storeId"));
         int supplierId = Integer.parseInt(request.getParameter("supplierId"));
@@ -33,9 +27,8 @@ public class UpdateCookieCommand implements Command {
                 .storeId(storeId)
                 .supplierId(supplierId)
                 .build();
-        cookieService.updateCookie(cookie);
-        List<CookieDTO> list = cookieService.readAllCookies();
-        request.setAttribute("cookies", list);
+        service.updateCookie(cookie);
+        extractor.extract(request);
         return "/jsp/lists/cookies.jsp";
     }
 }

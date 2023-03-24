@@ -45,4 +45,17 @@ public class SweetsServiceImpl implements SweetsService {
         Sweets sweets = dao.selectById(id);
         return mapper.mapToDTO(sweets);
     }
+
+    @Override
+    public List<SweetsDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
+        return dao.findAllByPage(currentPage, recordsPerPage)
+                .stream()
+                .map(map ->mapper.mapToDTO(map))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        return dao.getNumberOfRows();
+    }
 }

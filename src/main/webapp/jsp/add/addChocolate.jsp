@@ -24,6 +24,8 @@
     <h2 class="catalog-name">Add chocolate</h2>
     <form method="post" action="home">
         <input type="hidden" name="command" value="create_chocolate">
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Price:
                 <div>

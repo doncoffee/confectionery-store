@@ -1,6 +1,8 @@
 package by.academy.controller.impl.gotopage;
 
 import by.academy.controller.Command;
+import by.academy.controller.extractor.Extractor;
+import by.academy.controller.extractor.impl.CookieExtractor;
 import by.academy.service.BrandService;
 import by.academy.service.CookieService;
 import by.academy.service.StoreService;
@@ -18,21 +20,23 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class GoToEditCookieCommand implements Command {
+    private final CookieService cookieService = new CookieServiceImpl();
+    private final Extractor<CookieDTO> extractor = new CookieExtractor();
+    private final BrandService brandService = new BrandServiceImpl();
+    private final StoreService storeService = new StoreServiceImpl();
+    private final SupplierService supplierService = new SupplierServiceImpl();
     @Override
     public String execute(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        CookieService service = new CookieServiceImpl();
-        BrandService brandService = new BrandServiceImpl();
-        StoreService storeService = new StoreServiceImpl();
-        SupplierService supplierService = new SupplierServiceImpl();
         List<BrandDTO> brandList = brandService.readAllBrands();
-        request.setAttribute("brands", brandList);
         List<StoreDTO> storeList = storeService.readAllStores();
-        request.setAttribute("stores", storeList);
         List<SupplierDTO> supplierList = supplierService.readAllSuppliers();
+        CookieDTO cookieDTO = cookieService.selectCookieById(id);
+        request.setAttribute("brands", brandList);
+        request.setAttribute("stores", storeList);
         request.setAttribute("suppliers", supplierList);
-        CookieDTO cookieDTO = service.selectCookieById(id);
         request.setAttribute("cookie", cookieDTO);
+        extractor.extract(request);
         return "/jsp/edit/editCookie.jsp";
     }
 }

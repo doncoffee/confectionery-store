@@ -1,6 +1,8 @@
 package by.academy.controller.impl.gotopage;
 
 import by.academy.controller.Command;
+import by.academy.controller.extractor.Extractor;
+import by.academy.controller.extractor.impl.StoreExtractor;
 import by.academy.service.AddressService;
 import by.academy.service.PhoneNumberService;
 import by.academy.service.StoreService;
@@ -15,18 +17,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class GoToEditStoreCommand implements Command {
+    private final StoreService service = new StoreServiceImpl();
+    private final Extractor<StoreDTO> extractor = new StoreExtractor();
+    private final AddressService addressService = new AddressServiceImpl();
+    private final PhoneNumberService phoneNumberService = new PhoneNumberServiceImpl();
     @Override
     public String execute(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        StoreService service = new StoreServiceImpl();
-        AddressService addressService = new AddressServiceImpl();
-        PhoneNumberService phoneNumberService = new PhoneNumberServiceImpl();
         List<AddressDTO> addressList = addressService.readAllAddresses();
-        request.setAttribute("addresses", addressList);
         List<PhoneNumberDTO> phoneNumberList = phoneNumberService.readAllPhoneNumbers();
-        request.setAttribute("phoneNumbers", phoneNumberList);
         StoreDTO storeDTO = service.selectStoreById(id);
+        request.setAttribute("addresses", addressList);
+        request.setAttribute("phoneNumbers", phoneNumberList);
         request.setAttribute("store", storeDTO);
+        extractor.extract(request);
         return "/jsp/edit/editStore.jsp";
     }
 }

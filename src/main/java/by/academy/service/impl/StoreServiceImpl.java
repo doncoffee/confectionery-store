@@ -45,4 +45,17 @@ public class StoreServiceImpl implements StoreService {
         Store store = dao.selectById(id);
         return mapper.mapToDTO(store);
     }
+
+    @Override
+    public List<StoreDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
+        return dao.findAllByPage(currentPage, recordsPerPage)
+                .stream()
+                .map(map ->mapper.mapToDTO(map))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        return dao.getNumberOfRows();
+    }
 }

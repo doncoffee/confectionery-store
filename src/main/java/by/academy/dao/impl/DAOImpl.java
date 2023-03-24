@@ -4,6 +4,10 @@ import by.academy.dao.DAO;
 import by.academy.util.HibernateUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Query;
+import jakarta.persistence.TypedQuery;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 
@@ -74,5 +78,43 @@ public class DAOImpl<T> implements DAO<T> {
         entityManager.getTransaction().commit();
         entityManager.close();
         return object;
+    }
+
+    @Override
+    public List<T> findAllByPage(Integer currentPage, Integer itemsPerPage) {
+        EntityManager em = HibernateUtil.getEntityManager();
+        em.getTransaction().begin();
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<T> criteria = cb.createQuery(clazz);
+        Root<T> root = criteria.from(clazz);
+
+        criteria.select(root);
+        criteria.orderBy(cb.asc(root.get("id")));
+        TypedQuery<T> typedQuery = em.createQuery(criteria);
+        int offset = (currentPage - 1) * itemsPerPage;
+        typedQuery.setFirstResult(offset);
+        typedQuery.setMaxResults(itemsPerPage);
+        List<T> resultList = typedQuery.getResultList();
+
+        em.getTransaction().commit();
+        em.close();
+        return resultList;
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        EntityManager em = HibernateUtil.getEntityManager();
+        em.getTransaction().begin();
+
+        CriteriaBuilder builder = em.getCriteriaBuilder();
+        CriteriaQuery<T> criteria = builder.createQuery(clazz);
+        Root<T> root = criteria.from(clazz);
+
+        Integer size = em.createQuery(criteria).getResultList().size();
+
+        em.getTransaction().commit();
+        em.close();
+        return size;
     }
 }
