@@ -25,6 +25,8 @@
     <form method="post" action="home">
         <input type="hidden" name="command" value="update_cookie">
         <input type="hidden" name="id" value=${requestScope.cookie.id}>
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Price:
                 <div>
@@ -76,7 +78,7 @@
             </label>
         </div>
         <button class="btn btn-default" type="submit" name="command" value="update_cookie">UPDATE COOKIE</button>
-        <a class="btn btn-default" href="home?command=read_cookie">CANCEL</a>
+        <button class="btn btn-default" type="submit" name="command" value="update_cookie">CANCEL</button>
     </form>
 </div>
 <footer class="footerNP">

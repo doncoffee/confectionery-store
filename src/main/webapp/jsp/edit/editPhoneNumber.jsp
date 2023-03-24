@@ -25,6 +25,8 @@
     <form method="post" action="home">
         <input type="hidden" name="command" value="update_phone_number">
         <input type="hidden" name="id" value=${requestScope.phoneNumber.id}>
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Number:
                 <div>
@@ -33,7 +35,7 @@
             </label>
         </div>
         <button class="btn btn-default" type="submit" name="command" value="update_phone_number">UPDATE PHONE NUMBER</button>
-        <a class="btn btn-default" href="home?command=read_phone_number">CANCEL</a>
+        <button class="btn btn-default" type="submit" name="command" value="update_phone_number">CANCEL</button>
     </form>
 </div>
 <footer class="footer">

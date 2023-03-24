@@ -14,4 +14,8 @@ public interface AddressService {
     void deleteAddress(int id);
 
     AddressDTO selectAddressById(int id);
+
+    List<AddressDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+
+    Integer getNumberOfRows();
 }

@@ -45,4 +45,17 @@ public class CookieServiceImpl implements CookieService {
         Cookie cookie = dao.selectById(id);
         return mapper.mapToDTO(cookie);
     }
+
+    @Override
+    public List<CookieDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
+        return dao.findAllByPage(currentPage, recordsPerPage)
+                .stream()
+                .map(map ->mapper.mapToDTO(map))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        return dao.getNumberOfRows();
+    }
 }

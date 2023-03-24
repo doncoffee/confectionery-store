@@ -1,17 +1,19 @@
 package by.academy.controller.impl.create;
 
 import by.academy.controller.Command;
-import by.academy.service.*;
+import by.academy.controller.extractor.Extractor;
+import by.academy.controller.extractor.impl.SweetsExtractor;
+import by.academy.service.SweetsService;
 import by.academy.service.dto.SweetsDTO;
-import by.academy.service.impl.*;
+import by.academy.service.impl.SweetsServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class AddSweetsCommand implements Command {
+    private final SweetsService service = new SweetsServiceImpl();
+    private final Extractor<SweetsDTO> extractor = new SweetsExtractor();
     @Override
     public String execute(HttpServletRequest request) {
-        SweetsService sweetsService = new SweetsServiceImpl();
         int brandId = Integer.parseInt(request.getParameter("brandId"));
         int storeId = Integer.parseInt(request.getParameter("storeId"));
         int supplierId = Integer.parseInt(request.getParameter("supplierId"));
@@ -25,9 +27,8 @@ public class AddSweetsCommand implements Command {
                 .storeId(storeId)
                 .supplierId(supplierId)
                 .build();
-        sweetsService.createSweets(sweets);
-        List<SweetsDTO> list = sweetsService.readAllSweets();
-        request.setAttribute("sweets", list);
+        service.createSweets(sweets);
+        extractor.extract(request);
         return "/jsp/lists/sweets.jsp";
     }
 }

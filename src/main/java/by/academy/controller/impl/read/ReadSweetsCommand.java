@@ -1,19 +1,17 @@
 package by.academy.controller.impl.read;
 
 import by.academy.controller.Command;
-import by.academy.service.SweetsService;
+import by.academy.controller.extractor.Extractor;
+import by.academy.controller.extractor.impl.SweetsExtractor;
 import by.academy.service.dto.SweetsDTO;
-import by.academy.service.impl.SweetsServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class ReadSweetsCommand implements Command {
+    private final Extractor<SweetsDTO> extractor = new SweetsExtractor();
     @Override
     public String execute(HttpServletRequest request) {
-        SweetsService sweetsService = new SweetsServiceImpl();
-        List<SweetsDTO> list = sweetsService.readAllSweets();
-        request.setAttribute("sweets", list);
+        extractor.extract(request);
         return "/jsp/lists/sweets.jsp";
     }
 }

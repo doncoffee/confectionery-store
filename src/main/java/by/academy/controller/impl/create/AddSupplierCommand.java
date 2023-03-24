@@ -1,17 +1,19 @@
 package by.academy.controller.impl.create;
 
 import by.academy.controller.Command;
+import by.academy.controller.extractor.Extractor;
+import by.academy.controller.extractor.impl.SupplierExtractor;
 import by.academy.service.SupplierService;
 import by.academy.service.dto.SupplierDTO;
 import by.academy.service.impl.SupplierServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 public class AddSupplierCommand implements Command {
+    private final SupplierService service = new SupplierServiceImpl();
+    private final Extractor<SupplierDTO> extractor = new SupplierExtractor();
     @Override
     public String execute(HttpServletRequest request) {
-        SupplierService supplierService = new SupplierServiceImpl();
         int addressId = Integer.parseInt(request.getParameter("addressId"));
         int phoneNumberId = Integer.parseInt(request.getParameter("phoneNumberId"));
         SupplierDTO supplier = SupplierDTO.builder()
@@ -21,9 +23,8 @@ public class AddSupplierCommand implements Command {
                 .addressId(addressId)
                 .phoneNumberId(phoneNumberId)
                 .build();
-        supplierService.createSupplier(supplier);
-        List<SupplierDTO> list = supplierService.readAllSuppliers();
-        request.setAttribute("suppliers", list);
+        service.createSupplier(supplier);
+        extractor.extract(request);
         return "/jsp/lists/suppliers.jsp";
     }
 }

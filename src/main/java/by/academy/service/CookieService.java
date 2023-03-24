@@ -14,4 +14,8 @@ public interface CookieService {
     void deleteCookie(int id);
 
     CookieDTO selectCookieById(int id);
+
+    List<CookieDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+
+    Integer getNumberOfRows();
 }

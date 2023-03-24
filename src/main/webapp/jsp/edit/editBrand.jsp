@@ -25,6 +25,8 @@
     <form method="post" action="home">
         <input type="hidden" name="command" value="update_brand">
         <input type="hidden" name="id" value=${requestScope.brand.id}>
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Name:
                 <div>
@@ -34,7 +36,7 @@
             </label>
         </div>
         <button type="submit" name="command" value="update_brand" class="btn">UPDATE BRAND</button>
-        <a href="home?command=read_brand" class="btn">CANCEL</a>
+        <button type="submit" name="command" value="update_brand" class="btn">CANCEL</button>
     </form>
 </div>
 <footer class="footer">

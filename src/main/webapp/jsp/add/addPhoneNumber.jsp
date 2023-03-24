@@ -24,6 +24,8 @@
     <h2 class="catalog-name">Add phone number</h2>
     <form method="post" action="home">
         <input type="hidden" name="command" value="create_phone_number">
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Number:
                 <div>

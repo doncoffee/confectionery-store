@@ -44,4 +44,17 @@ public class AddressServiceImpl implements AddressService {
         Address address = dao.selectById(id);
         return mapper.mapToDTO(address);
     }
+
+    @Override
+    public List<AddressDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
+        return dao.findAllByPage(currentPage, recordsPerPage)
+                .stream()
+                .map(map ->mapper.mapToDTO(map))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public Integer getNumberOfRows() {
+        return dao.getNumberOfRows();
+    }
 }

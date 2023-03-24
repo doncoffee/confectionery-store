@@ -14,4 +14,8 @@ public interface PhoneNumberService {
     void deletePhoneNumber(int id);
 
     PhoneNumberDTO selectPhoneNumberById(int id);
+
+    List<PhoneNumberDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+
+    Integer getNumberOfRows();
 }

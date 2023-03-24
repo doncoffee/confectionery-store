@@ -14,4 +14,8 @@ public interface StoreService {
     void deleteStore(int id);
 
     StoreDTO selectStoreById(int id);
+
+    List<StoreDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+
+    Integer getNumberOfRows();
 }

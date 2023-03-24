@@ -10,68 +10,128 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<c:choose>
-<c:when test="${requestScope.stores.size() > 0}">
-<div class="header">
-    <a class="active" href="index.jsp">Home</a>
-    <a href="home?command=read_chocolate">Chocolate</a>
-    <a href="home?command=read_cookie">Cookies</a>
-    <a href="home?command=read_sweets">Sweets</a>
-    <a href="home?command=read_brand">Brands</a>
-    <a href="home?command=read_store">Stores</a>
-    <a href="home?command=read_supplier">Suppliers</a>
-    <a href="home?command=read_address">Addresses</a>
-    <a href="home?command=read_phone_number">Contacts</a>
-</div>
-<div class="catalog-name">
-    <h1>Stores</h1>
-</div>
-<div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>№</th>
-            <th>Address</th>
-            <th>PhoneNumber</th>
-            <th colspan=2>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${requestScope.stores}" var="store" varStatus="status">
+<div class="wrapper">
+    <c:choose>
+    <c:when test="${requestScope.stores.size() > 0}">
+    <div class="header">
+        <a class="active" href="index.jsp">Home</a>
+        <a href="home?command=read_chocolate">Chocolate</a>
+        <a href="home?command=read_cookie">Cookies</a>
+        <a href="home?command=read_sweets">Sweets</a>
+        <a href="home?command=read_brand">Brands</a>
+        <a href="home?command=read_store">Stores</a>
+        <a href="home?command=read_supplier">Suppliers</a>
+        <a href="home?command=read_address">Addresses</a>
+        <a href="home?command=read_phone_number">Contacts</a>
+    </div>
+    <div class="catalog-name">
+        <h1>Stores</h1>
+    </div>
+    <div class="main">
+        <table class="table table-striped">
+            <thead>
             <tr>
-                <td>${status.count}</td>
-                <td style="display:none">${store.addressId}</td>
-                <td>${store.addressName}</td>
-                <td style="display:none">${store.phoneNumberId}</td>
-                <td>${store.phoneNumber}</td>
-                <td>
-                    <form action="home" method="get">
-                        <input type="hidden" name="command" value="go_to_edit_store">
-                        <input type="hidden" name="id" value=${store.id}>
-                        <button class="button btn btn-default" type="submit" value="edit">EDIT</button>
-                    </form>
-                </td>
-                <td>
-                    <form action="home" method="post">
-                        <input type="hidden" name="command" value="delete_store">
-                        <input type="hidden" name="id" value=${store.id}>
-                        <button class="button btn btn-default" type="submit" value="delete">DELETE</button>
-                    </form>
-                </td>
+                <th>№</th>
+                <th>Address</th>
+                <th>PhoneNumber</th>
+                <th colspan=2>Action</th>
             </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-    </c:when>
-    <c:otherwise>
-        <div>
-            <h2 class="catalog-name">There are no stores yet!</h2>
-        </div>
-    </c:otherwise>
-    </c:choose>
+            </thead>
+            <tbody>
+            <c:forEach items="${requestScope.stores}" var="store" varStatus="status">
+                <tr>
+                    <td>${status.count}</td>
+                    <td style="display:none">${store.addressId}</td>
+                    <td>${store.addressName}</td>
+                    <td style="display:none">${store.phoneNumberId}</td>
+                    <td>${store.phoneNumber}</td>
+                    <td>
+                        <form action="home" method="get">
+                            <input type="hidden" name="command" value="go_to_edit_store">
+                            <input type="hidden" name="id" value=${store.id}>
+                            <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+                            <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
+                            <button class="button btn btn-default" type="submit" value="edit">EDIT</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form action="home" method="post">
+                            <input type="hidden" name="command" value="delete_store">
+                            <input type="hidden" name="id" value=${store.id}>
+                            <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+                            <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
+                            <button class="button btn btn-default" type="submit" value="delete">DELETE</button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
+            </tbody>
+        </table>
+        </c:when>
+        <c:otherwise>
+            <div>
+                <h2 class="catalog-name">There are no stores yet!</h2>
+            </div>
+        </c:otherwise>
+        </c:choose>
 
-    <a href="home?command=go_to_add_store" class="btn btn-default">Add store</a>
-    <footer class="footer">
+        <div class="pagination-block">
+            <div class="pagination">
+                <c:if test="${currentPage > 1}">
+                    <form method="get" action="home">
+                        <input type="hidden" name="command" value="read_store">
+                        <input type="hidden" name="itemsPerPage" value="${itemsPerPage}">
+                        <input type="hidden" name="currentPage" value="${currentPage - 1}">
+                        <button class="page-link" type="submit">Previous</button>
+                    </form>
+                </c:if>
+                <c:forEach begin="1" end="${totalItems}" var="i">
+                    <c:choose>
+                        <c:when test="${currentPage eq i}">
+                            <a class="current-page">${i}</a>
+                        </c:when>
+                        <c:otherwise>
+                            <li>
+                                <form method="get" action="home">
+                                    <input type="hidden" name="command" value="read_store">
+                                    <input type="hidden" name="itemsPerPage" value="${itemsPerPage}">
+                                    <input type="hidden" name="currentPage" value="${i}">
+                                    <button type="submit">${i}</button>
+                                </form>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </c:forEach>
+                <c:if test="${currentPage < totalItems}">
+                    <form method="get" action="home">
+                        <input type="hidden" name="command" value="read_store">
+                        <input type="hidden" name="itemsPerPage" value="${itemsPerPage}">
+                        <input type="hidden" name="currentPage" value="${currentPage + 1}">
+                        <button class="page-link" type="submit">Next</button>
+                    </form>
+                </c:if>
+            </div>
+
+            <form class="form" method="get" action="home">
+                <input type="hidden" name="command" value="read_store">
+                <input type="hidden" name="currentPage" value="1">
+                <select class="form select" id="records" name="itemsPerPage" onchange="this.form.submit()">
+                    <option value="" selected disabled hidden>Records quantity</option>
+                    <option value="3">3</option>
+                    <option value="5">5</option>
+                    <option value="10">10</option>
+                </select>
+            </form>
+        </div>
+        <form action="home" method="get">
+            <input type="hidden" name="command" value="go_to_add_store">
+            <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+            <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
+            <button class="button btn btn-default" type="submit" value="edit">Add store</button>
+        </form>
+    </div>
+
+    <footer class="footerNP">
         <div class="wrap wrap__footer">
             <div class="footer__top">
                 <div class="footer__nav">
@@ -128,6 +188,7 @@
         </div>
     </footer>
 
+</div>
 </div>
 </body>
 </html>

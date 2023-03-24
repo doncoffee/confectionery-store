@@ -25,6 +25,8 @@
     <form method="post" action="home">
         <input type="hidden" name="command" value="update_chocolate">
         <input type="hidden" name="id" value=${requestScope.chocolate.id}>
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Price:
                 <div>
@@ -80,7 +82,7 @@
             </label>
         </div>
         <button type="submit" name="command" value="update_chocolate" class="btn btn-default">UPDATE CHOCOLATE</button>
-        <a href="home?command=read_chocolate" class="btn btn-default">CANCEL</a>
+        <button type="submit" name="command" value="update_chocolate" class="btn btn-default">CANCEL</button>
     </form>
 </div>
 <footer class="footerNP">

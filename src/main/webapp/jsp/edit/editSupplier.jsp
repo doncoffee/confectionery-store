@@ -25,6 +25,8 @@
     <form method="post" action="home">
         <input type="hidden" name="command" value="update_supplier">
         <input type="hidden" name="id" value=${requestScope.supplier.id}>
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Name:
                 <div>
@@ -58,7 +60,7 @@
             </label>
         </div>
         <button class="btn btn-default" type="submit" name="command" value="update_supplier">UPDATE SUPPLIER</button>
-        <a class="btn btn-default" href="home?command=read_supplier">CANCEL</a>
+        <button class="btn btn-default" type="submit" name="command" value="update_supplier">CANCEL</button>
     </form>
 </div>
 <footer class="footer">

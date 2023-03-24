@@ -24,6 +24,8 @@
     <h2 class="catalog-name">Add store</h2>
     <form method="post" action="home">
         <input type="hidden" name="command" value="create_store">
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
         <div>
             <label class="input">Address:
                 <div>

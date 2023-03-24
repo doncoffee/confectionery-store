@@ -14,4 +14,8 @@ public interface SupplierService {
     void deleteSupplier(int id);
 
     SupplierDTO selectSupplierById(int id);
+
+    List<SupplierDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+
+    Integer getNumberOfRows();
 }
