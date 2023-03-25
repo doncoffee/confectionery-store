@@ -6,6 +6,9 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Set;
 
+import static by.academy.util.constants.Constants.ADDRESS;
+import static by.academy.util.constants.Constants.ADDRESS_ID;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,19 +16,19 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "address")
+@Table(name = ADDRESS)
 public class Address implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "address_id")
+    @Column(name = ADDRESS_ID)
     @EqualsAndHashCode.Include
     private Integer id;
     @Column
     private String name;
     @Column
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = ADDRESS)
     private Set<Store> stores;
     @Column
-    @OneToMany(mappedBy = "address")
+    @OneToMany(mappedBy = ADDRESS)
     private Set<Supplier> suppliers;
 }

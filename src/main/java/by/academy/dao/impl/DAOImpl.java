@@ -11,8 +11,10 @@ import jakarta.persistence.criteria.Root;
 
 import java.util.List;
 
+import static by.academy.util.constants.Constants.FROM;
+import static by.academy.util.constants.Constants.ID;
+
 public class DAOImpl<T> implements DAO<T> {
-    public static final String FROM = "FROM ";
     private final Class<T> clazz;
 
     public DAOImpl(Class<T> clazz) {
@@ -90,7 +92,7 @@ public class DAOImpl<T> implements DAO<T> {
         Root<T> root = criteria.from(clazz);
 
         criteria.select(root);
-        criteria.orderBy(cb.asc(root.get("id")));
+        criteria.orderBy(cb.asc(root.get(ID)));
         TypedQuery<T> typedQuery = em.createQuery(criteria);
         int offset = (currentPage - 1) * itemsPerPage;
         typedQuery.setFirstResult(offset);

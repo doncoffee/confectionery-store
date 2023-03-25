@@ -8,12 +8,15 @@ import by.academy.service.impl.StoreServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class StoreExtractor implements Extractor<StoreDTO> {
+import static by.academy.controller.constants.ControllerConstants.*;
+
+public class StoreExtractor implements Extractor {
     private final StoreService service = new StoreServiceImpl();
+
     @Override
     public void extract(HttpServletRequest request) {
-        String pageNumberParam = request.getParameter("currentPage");
-        String itemsPerPageParam = request.getParameter("itemsPerPage");
+        String pageNumberParam = request.getParameter(CURRENT_PAGE);
+        String itemsPerPageParam = request.getParameter(ITEMS_PER_PAGE);
         int pageNumber = pageNumberParam != null ? Integer.parseInt(pageNumberParam) : 1;
         int itemsPerPage = itemsPerPageParam != null ? Integer.parseInt(itemsPerPageParam) : 3;
 
@@ -21,9 +24,9 @@ public class StoreExtractor implements Extractor<StoreDTO> {
                 service.getNumberOfRows() / itemsPerPage);
 
         List<StoreDTO> list = service.findAllByPage(pageNumber, itemsPerPage);
-        request.setAttribute("stores", list);
-        request.setAttribute("currentPage", pageNumber);
-        request.setAttribute("itemsPerPage", itemsPerPage);
-        request.setAttribute("totalItems", totalItems);
+        request.setAttribute(STORES, list);
+        request.setAttribute(CURRENT_PAGE, pageNumber);
+        request.setAttribute(ITEMS_PER_PAGE, itemsPerPage);
+        request.setAttribute(TOTAL_ITEMS, totalItems);
     }
 }

@@ -9,17 +9,20 @@ import by.academy.service.impl.AddressServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class UpdateAddressCommand implements Command {
     private final AddressService service = new AddressServiceImpl();
-    private final Extractor<AddressDTO> extractor = new AddressExtractor();
+    private final Extractor extractor = new AddressExtractor();
+
     @Override
     public String execute(HttpServletRequest request) {
         AddressDTO address = AddressDTO.builder()
-                .id(Integer.valueOf(request.getParameter("id")))
-                .name(request.getParameter("name"))
+                .id(Integer.valueOf(request.getParameter(ID)))
+                .name(request.getParameter(NAME))
                 .build();
         service.updateAddress(address);
         extractor.extract(request);
-        return "/jsp/lists/addresses.jsp";
+        return JSP_LISTS_ADDRESSES_JSP;
     }
 }

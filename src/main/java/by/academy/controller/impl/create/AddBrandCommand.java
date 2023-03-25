@@ -9,17 +9,21 @@ import by.academy.service.impl.BrandServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.academy.controller.constants.ControllerConstants.JSP_LISTS_BRANDS_JSP;
+import static by.academy.controller.constants.ControllerConstants.NAME;
+
 public class AddBrandCommand implements Command {
     private final BrandService service = new BrandServiceImpl();
-    private final Extractor<BrandDTO> extractor = new BrandExtractor();
+    private final Extractor extractor = new BrandExtractor();
+
     @Override
     public String execute(HttpServletRequest request) {
         BrandDTO brand = BrandDTO.builder()
                 .id(null)
-                .name(request.getParameter("name"))
+                .name(request.getParameter(NAME))
                 .build();
         service.createBrand(brand);
         extractor.extract(request);
-        return "/jsp/lists/brands.jsp";
+        return JSP_LISTS_BRANDS_JSP;
     }
 }

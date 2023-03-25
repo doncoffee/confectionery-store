@@ -9,13 +9,16 @@ import by.academy.service.impl.StoreServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class AddStoreCommand implements Command {
     private final StoreService service = new StoreServiceImpl();
-    private final Extractor<StoreDTO> extractor = new StoreExtractor();
+    private final Extractor extractor = new StoreExtractor();
+
     @Override
     public String execute(HttpServletRequest request) {
-        int addressId = Integer.parseInt(request.getParameter("addressId"));
-        int phoneNumberId = Integer.parseInt(request.getParameter("phoneNumberId"));
+        int addressId = Integer.parseInt(request.getParameter(ADDRESS_ID));
+        int phoneNumberId = Integer.parseInt(request.getParameter(PHONE_NUMBER_ID));
         StoreDTO store = StoreDTO.builder()
                 .id(null)
                 .addressId(addressId)
@@ -23,6 +26,6 @@ public class AddStoreCommand implements Command {
                 .build();
         service.createStore(store);
         extractor.extract(request);
-        return "/jsp/lists/stores.jsp";
+        return JSP_LISTS_STORES_JSP;
     }
 }

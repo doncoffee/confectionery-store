@@ -5,6 +5,8 @@ import lombok.*;
 import jakarta.persistence.*;
 import java.io.Serializable;
 
+import static by.academy.util.constants.Constants.*;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,11 +14,11 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "sweets")
+@Table(name = SWEETS)
 public class Sweets implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "sweets_id")
+    @Column(name = SWEETS_ID)
     @EqualsAndHashCode.Include
     private Integer id;
     @Column
@@ -26,14 +28,14 @@ public class Sweets implements Serializable {
     @Column
     private Double weight;
     @ManyToOne
-    @JoinColumn(name = "brand_id")
+    @JoinColumn(name = BRAND_ID)
     private Brand brand;
     @Column
     private String composition;
     @ManyToOne
-    @JoinColumn(name = "store_id")
+    @JoinColumn(name = STORE_ID)
     private Store store;
     @ManyToOne
-    @JoinColumn(name = "supplier_id")
+    @JoinColumn(name = SUPPLIER_ID)
     private Supplier supplier;
 }

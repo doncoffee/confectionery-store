@@ -9,26 +9,29 @@ import by.academy.service.impl.ChocolateServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class AddChocolateCommand implements Command {
     private final ChocolateService chocolateService = new ChocolateServiceImpl();
-    private final Extractor<ChocolateDTO> extractor = new ChocolateExtractor();
+    private final Extractor extractor = new ChocolateExtractor();
+
     @Override
     public String execute(HttpServletRequest request) {
-        int brandId = Integer.parseInt(request.getParameter("brandId"));
-        int storeId = Integer.parseInt(request.getParameter("storeId"));
-        int supplierId = Integer.parseInt(request.getParameter("supplierId"));
+        int brandId = Integer.parseInt(request.getParameter(BRAND_ID));
+        int storeId = Integer.parseInt(request.getParameter(STORE_ID));
+        int supplierId = Integer.parseInt(request.getParameter(SUPPLIER_ID));
         ChocolateDTO chocolate = ChocolateDTO.builder()
                 .id(null)
-                .price(Double.valueOf(request.getParameter("price")))
-                .type(request.getParameter("type"))
-                .weight(Double.valueOf(request.getParameter("weight")))
-                .composition(request.getParameter("composition"))
+                .price(Double.valueOf(request.getParameter(PRICE)))
+                .type(request.getParameter(TYPE))
+                .weight(Double.valueOf(request.getParameter(WEIGHT)))
+                .composition(request.getParameter(COMPOSITION))
                 .brandId(brandId)
                 .storeId(storeId)
                 .supplierId(supplierId)
                 .build();
         chocolateService.createChocolate(chocolate);
         extractor.extract(request);
-        return "/jsp/lists/chocolates.jsp";
+        return JSP_LISTS_CHOCOLATES_JSP;
     }
 }

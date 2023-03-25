@@ -8,12 +8,15 @@ import by.academy.service.impl.AddressServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class AddressExtractor implements Extractor<AddressDTO> {
+import static by.academy.controller.constants.ControllerConstants.*;
+
+public class AddressExtractor implements Extractor {
+
     private final AddressService service = new AddressServiceImpl();
     @Override
     public void extract(HttpServletRequest request) {
-        String pageNumberParam = request.getParameter("currentPage");
-        String itemsPerPageParam = request.getParameter("itemsPerPage");
+        String pageNumberParam = request.getParameter(CURRENT_PAGE);
+        String itemsPerPageParam = request.getParameter(ITEMS_PER_PAGE);
         int pageNumber = pageNumberParam != null
                 ? Integer.parseInt(pageNumberParam) : 1;
         int itemsPerPage = itemsPerPageParam != null
@@ -21,9 +24,9 @@ public class AddressExtractor implements Extractor<AddressDTO> {
         int totalItems = (int) Math.ceil((double)
                 service.getNumberOfRows() / itemsPerPage);
         List<AddressDTO> list = service.findAllByPage(pageNumber, itemsPerPage);
-        request.setAttribute("addresses", list);
-        request.setAttribute("currentPage", pageNumber);
-        request.setAttribute("itemsPerPage", itemsPerPage);
-        request.setAttribute("totalItems", totalItems);
+        request.setAttribute(ADDRESSES, list);
+        request.setAttribute(CURRENT_PAGE, pageNumber);
+        request.setAttribute(ITEMS_PER_PAGE, itemsPerPage);
+        request.setAttribute(TOTAL_ITEMS, totalItems);
     }
 }

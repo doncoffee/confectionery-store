@@ -9,26 +9,29 @@ import by.academy.service.impl.CookieServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class UpdateCookieCommand implements Command {
     private final CookieService service = new CookieServiceImpl();
-    private final Extractor<CookieDTO> extractor = new CookieExtractor();
+    private final Extractor extractor = new CookieExtractor();
+
     @Override
     public String execute(HttpServletRequest request) {
-        int brandId = Integer.parseInt(request.getParameter("brandId"));
-        int storeId = Integer.parseInt(request.getParameter("storeId"));
-        int supplierId = Integer.parseInt(request.getParameter("supplierId"));
+        int brandId = Integer.parseInt(request.getParameter(BRAND_ID));
+        int storeId = Integer.parseInt(request.getParameter(STORE_ID));
+        int supplierId = Integer.parseInt(request.getParameter(SUPPLIER_ID));
         CookieDTO cookie = CookieDTO.builder()
-                .id(Integer.valueOf(request.getParameter("id")))
-                .price(Double.valueOf(request.getParameter("price")))
-                .type(request.getParameter("type"))
-                .weight(Double.valueOf(request.getParameter("weight")))
-                .composition(request.getParameter("composition"))
+                .id(Integer.valueOf(request.getParameter(ID)))
+                .price(Double.valueOf(request.getParameter(PRICE)))
+                .type(request.getParameter(TYPE))
+                .weight(Double.valueOf(request.getParameter(WEIGHT)))
+                .composition(request.getParameter(COMPOSITION))
                 .brandId(brandId)
                 .storeId(storeId)
                 .supplierId(supplierId)
                 .build();
         service.updateCookie(cookie);
         extractor.extract(request);
-        return "/jsp/lists/cookies.jsp";
+        return JSP_LISTS_COOKIES_JSP;
     }
 }
