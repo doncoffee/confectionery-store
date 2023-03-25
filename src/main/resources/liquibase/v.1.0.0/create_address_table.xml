@@ -5,14 +5,14 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
     <changeSet id="create-address-table-liquibase" author="doncoffee">
-        <sql>
-            create table `confectionery-store`.address
-            (
-                address_id int auto_increment
-                    primary key,
-                name       varchar(255) null
-            );
-        </sql>
+        <createTable tableName="address">
+            <column name="address_id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>

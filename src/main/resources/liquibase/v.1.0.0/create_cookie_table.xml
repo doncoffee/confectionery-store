@@ -5,26 +5,35 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
 
     <changeSet id="create-cookie-table-liquibase" author="doncoffee">
-        <sql>
-            create table `confectionery-store`.cookie
-            (
-                cookie_id   int auto_increment
-                    primary key,
-                composition varchar(255) null,
-                price       double       null,
-                type        varchar(255) null,
-                weight      double       null,
-                brand_id    int          null,
-                store_id    int          null,
-                supplier_id int          null,
-                constraint FK937f7f0oa718h8ojphqj7s2el
-                    foreign key (supplier_id) references `confectionery-store`.supplier (store_id),
-                constraint FKb570r21t4nrkvi65nkuj5weva
-                    foreign key (brand_id) references `confectionery-store`.brand (brand_id),
-                constraint FKbvb3nai0jv5cgsxpi8fv7x5lt
-                    foreign key (store_id) references `confectionery-store`.store (store_id)
-            );
-        </sql>
+        <createTable tableName="cookie">
+            <column name="cookie_id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="composition" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="price" type="DOUBLE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="weight" type="DOUBLE">
+                <constraints nullable="true"/>
+            </column>
+            <column name="brand_id" type="INT">
+                <constraints nullable="true" foreignKeyName="FKb570r21t4nrkvi65nkuj5weva" referencedTableName="brand"
+                             referencedColumnNames="brand_id"/>
+            </column>
+            <column name="store_id" type="INT">
+                <constraints nullable="true" foreignKeyName="FKbvb3nai0jv5cgsxpi8fv7x5lt" referencedTableName="store"
+                             referencedColumnNames="store_id"/>
+            </column>
+            <column name="supplier_id" type="INT">
+                <constraints nullable="true" foreignKeyName="FK937f7f0oa718h8ojphqj7s2el" referencedTableName="supplier"
+                             referencedColumnNames="supplier_id"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>

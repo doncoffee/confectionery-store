@@ -46,9 +46,9 @@
 
             insert into supplier (contactPerson, name, address_id, phone_number_id)
             VALUES ("John Connor", "Vanilla Food Company", 4, 5),
-                ("Pamella Fillipson", "Stover&amp;Company", 5, 6),
-                ("Robert Anderson", "DELICERT DE CHOCOLAT &amp; MaryJane's", 6, 7),
-                ("Fillipo Anchellotti", "JOSEF MANNER &amp; COMP. AG", 7, 8);
+                   ("Pamella Fillipson", "Stover&amp;Company", 5, 6),
+                   ("Robert Anderson", "DELICERT DE CHOCOLAT &amp; MaryJane's", 6, 7),
+                   ("Fillipo Anchellotti", "JOSEF MANNER &amp; COMP. AG", 7, 8);
 
             insert into chocolate (composition, price, type, weight, brand_id, store_id, supplier_id)
             VALUES ("Energy value 525 kcal/2198.1 kJ
@@ -94,5 +94,4 @@ sugar 19.76 g Protein 2.06 g Salt 0.18 g", 2, "candy", 340, 4, 4, 4);
 
         </sql>
     </changeSet>
-
 </databaseChangeLog>
