@@ -10,8 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Objects;
 
-@WebServlet("/home")
+import static by.academy.controller.constants.ControllerConstants.COMMAND;
+import static by.academy.controller.constants.ControllerConstants.HOME;
+
+@WebServlet(HOME)
 public class Controller extends HttpServlet {
+
     @Override
     protected void doGet(HttpServletRequest req,
                          HttpServletResponse resp)
@@ -29,7 +33,7 @@ public class Controller extends HttpServlet {
     private void processRequest(final HttpServletRequest req,
                                 final HttpServletResponse resp)
             throws ServletException, IOException {
-        String commandStr = req.getParameter("command");
+        String commandStr = req.getParameter(COMMAND);
         Command command = CommandInvoker.define(commandStr);
         String page = Objects.requireNonNull(command).execute(req);
         getServletContext().getRequestDispatcher(page).forward(req, resp);

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
 
+import static by.academy.util.constants.Constants.*;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,26 +15,26 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "store")
+@Table(name = STORE)
 public class Store implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "store_id")
+    @Column(name = STORE_ID)
     @EqualsAndHashCode.Include
     private Integer id;
     @ManyToOne
-    @JoinColumn(name = "address_id")
+    @JoinColumn(name = ADDRESS_ID)
     private Address address;
     @ManyToOne
-    @JoinColumn(name = "phone_number_id")
+    @JoinColumn(name = PHONE_NUMBER_ID)
     private PhoneNumber phoneNumber;
     @Column
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = STORE)
     private Set<Chocolate> chocolates;
     @Column
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = STORE)
     private Set<Cookie> cookies;
     @Column
-    @OneToMany(mappedBy = "store")
+    @OneToMany(mappedBy = STORE)
     private Set<Sweets> sweets;
 }

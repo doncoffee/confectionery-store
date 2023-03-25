@@ -9,15 +9,18 @@ import by.academy.service.impl.AddressServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class GoToEditAddressCommand implements Command {
     private final AddressService service = new AddressServiceImpl();
-    private final Extractor<AddressDTO> extractor = new AddressExtractor();
+    private final Extractor extractor = new AddressExtractor();
+
     @Override
     public String execute(HttpServletRequest request) {
         extractor.extract(request);
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter(ID));
         AddressDTO addressDTO = service.selectAddressById(id);
-        request.setAttribute("address", addressDTO);
-        return "/jsp/edit/editAddress.jsp";
+        request.setAttribute(ADDRESS, addressDTO);
+        return JSP_EDIT_EDIT_ADDRESS_JSP;
     }
 }

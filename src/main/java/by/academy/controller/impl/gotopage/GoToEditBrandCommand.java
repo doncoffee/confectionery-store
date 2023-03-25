@@ -9,15 +9,18 @@ import by.academy.service.impl.BrandServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class GoToEditBrandCommand implements Command {
     private final BrandService service = new BrandServiceImpl();
-    private final Extractor<BrandDTO> extractor = new BrandExtractor();
+    private final Extractor extractor = new BrandExtractor();
+
     @Override
     public String execute(HttpServletRequest request) {
         extractor.extract(request);
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter(ID));
         BrandDTO brandDTO = service.selectBrandById(id);
-        request.setAttribute("brand", brandDTO);
-        return "/jsp/edit/editBrand.jsp";
+        request.setAttribute(BRAND, brandDTO);
+        return JSP_EDIT_EDIT_BRAND_JSP;
     }
 }

@@ -9,7 +9,6 @@ import by.academy.service.SupplierService;
 import by.academy.service.dto.BrandDTO;
 import by.academy.service.dto.StoreDTO;
 import by.academy.service.dto.SupplierDTO;
-import by.academy.service.dto.SweetsDTO;
 import by.academy.service.impl.BrandServiceImpl;
 import by.academy.service.impl.StoreServiceImpl;
 import by.academy.service.impl.SupplierServiceImpl;
@@ -17,20 +16,23 @@ import by.academy.service.impl.SupplierServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class GoToAddSweetsCommand implements Command {
-    private final Extractor<SweetsDTO> extractor = new SweetsExtractor();
+    private final Extractor extractor = new SweetsExtractor();
     private final BrandService brandService = new BrandServiceImpl();
     private final StoreService storeService = new StoreServiceImpl();
     private final SupplierService supplierService = new SupplierServiceImpl();
+
     @Override
     public String execute(HttpServletRequest request) {
         List<BrandDTO> brandList = brandService.readAllBrands();
         List<StoreDTO> storeList = storeService.readAllStores();
         List<SupplierDTO> supplierList = supplierService.readAllSuppliers();
-        request.setAttribute("brands", brandList);
-        request.setAttribute("stores", storeList);
-        request.setAttribute("suppliers", supplierList);
+        request.setAttribute(BRANDS, brandList);
+        request.setAttribute(STORES, storeList);
+        request.setAttribute(SUPPLIERS, supplierList);
         extractor.extract(request);
-        return "/jsp/add/addSweets.jsp";
+        return JSP_ADD_ADD_SWEETS_JSP;
     }
 }

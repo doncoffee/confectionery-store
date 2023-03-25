@@ -8,13 +8,15 @@ import by.academy.service.impl.PhoneNumberServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class PhoneNumberExtractor implements Extractor<PhoneNumberDTO> {
+import static by.academy.controller.constants.ControllerConstants.*;
+
+public class PhoneNumberExtractor implements Extractor {
     private final PhoneNumberService service = new PhoneNumberServiceImpl();
 
     @Override
     public void extract(HttpServletRequest request) {
-        String pageNumberParam = request.getParameter("currentPage");
-        String itemsPerPageParam = request.getParameter("itemsPerPage");
+        String pageNumberParam = request.getParameter(CURRENT_PAGE);
+        String itemsPerPageParam = request.getParameter(ITEMS_PER_PAGE);
         int pageNumber = pageNumberParam != null
                 ? Integer.parseInt(pageNumberParam) : 1;
         int itemsPerPage = itemsPerPageParam != null
@@ -25,9 +27,9 @@ public class PhoneNumberExtractor implements Extractor<PhoneNumberDTO> {
 
         List<PhoneNumberDTO> list = service.findAllByPage(pageNumber,
                 itemsPerPage);
-        request.setAttribute("phoneNumbers", list);
-        request.setAttribute("currentPage", pageNumber);
-        request.setAttribute("itemsPerPage", itemsPerPage);
-        request.setAttribute("totalItems", totalItems);
+        request.setAttribute(PHONE_NUMBERS, list);
+        request.setAttribute(CURRENT_PAGE, pageNumber);
+        request.setAttribute(ITEMS_PER_PAGE, itemsPerPage);
+        request.setAttribute(TOTAL_ITEMS, totalItems);
     }
 }

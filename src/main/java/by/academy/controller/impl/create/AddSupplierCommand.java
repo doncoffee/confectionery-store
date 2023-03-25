@@ -9,22 +9,25 @@ import by.academy.service.impl.SupplierServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class AddSupplierCommand implements Command {
     private final SupplierService service = new SupplierServiceImpl();
-    private final Extractor<SupplierDTO> extractor = new SupplierExtractor();
+    private final Extractor extractor = new SupplierExtractor();
+
     @Override
     public String execute(HttpServletRequest request) {
-        int addressId = Integer.parseInt(request.getParameter("addressId"));
-        int phoneNumberId = Integer.parseInt(request.getParameter("phoneNumberId"));
+        int addressId = Integer.parseInt(request.getParameter(ADDRESS_ID));
+        int phoneNumberId = Integer.parseInt(request.getParameter(PHONE_NUMBER_ID));
         SupplierDTO supplier = SupplierDTO.builder()
                 .id(null)
-                .name(request.getParameter("name"))
-                .contactPerson(request.getParameter("contactPerson"))
+                .name(request.getParameter(NAME))
+                .contactPerson(request.getParameter(CONTACT_PERSON))
                 .addressId(addressId)
                 .phoneNumberId(phoneNumberId)
                 .build();
         service.createSupplier(supplier);
         extractor.extract(request);
-        return "/jsp/lists/suppliers.jsp";
+        return JSP_LISTS_SUPPLIERS_JSP;
     }
 }

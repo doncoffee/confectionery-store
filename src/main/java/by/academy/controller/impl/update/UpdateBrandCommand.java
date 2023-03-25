@@ -9,17 +9,20 @@ import by.academy.service.impl.BrandServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class UpdateBrandCommand implements Command {
     private final BrandService service = new BrandServiceImpl();
-    private final Extractor<BrandDTO> extractor = new BrandExtractor();
+    private final Extractor extractor = new BrandExtractor();
+
     @Override
     public String execute(HttpServletRequest request) {
         BrandDTO brand = BrandDTO.builder()
-                .id(Integer.valueOf(request.getParameter("id")))
-                .name(request.getParameter("name"))
+                .id(Integer.valueOf(request.getParameter(ID)))
+                .name(request.getParameter(NAME))
                 .build();
         service.updateBrand(brand);
         extractor.extract(request);
-        return "/jsp/lists/brands.jsp";
+        return JSP_LISTS_BRANDS_JSP;
     }
 }

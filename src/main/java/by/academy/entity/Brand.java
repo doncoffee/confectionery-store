@@ -1,10 +1,13 @@
 package by.academy.entity;
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.Set;
+
+import static by.academy.util.constants.Constants.BRAND;
+import static by.academy.util.constants.Constants.BRAND_ID;
 
 @Builder
 @AllArgsConstructor
@@ -13,22 +16,22 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @Entity
-@Table(name = "brand")
+@Table(name = BRAND)
 public class Brand implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "brand_id")
+    @Column(name = BRAND_ID)
     @EqualsAndHashCode.Include
     private Integer id;
     @Column
     private String name;
     @Column
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = BRAND)
     private Set<Chocolate> chocolates;
     @Column
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = BRAND)
     private Set<Cookie> cookies;
     @Column
-    @OneToMany(mappedBy = "brand")
+    @OneToMany(mappedBy = BRAND)
     private Set<Sweets> sweets;
 }

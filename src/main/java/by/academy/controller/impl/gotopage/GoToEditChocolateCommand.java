@@ -19,24 +19,27 @@ import by.academy.service.impl.SupplierServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class GoToEditChocolateCommand implements Command {
     private final ChocolateService service = new ChocolateServiceImpl();
-    private final Extractor<ChocolateDTO> extractor = new ChocolateExtractor();
+    private final Extractor extractor = new ChocolateExtractor();
     private final BrandService brandService = new BrandServiceImpl();
     private final StoreService storeService = new StoreServiceImpl();
     private final SupplierService supplierService = new SupplierServiceImpl();
+
     @Override
     public String execute(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter(ID));
         List<BrandDTO> brandList = brandService.readAllBrands();
         List<StoreDTO> storeList = storeService.readAllStores();
         List<SupplierDTO> supplierList = supplierService.readAllSuppliers();
         ChocolateDTO chocolateDTO = service.selectChocolateById(id);
-        request.setAttribute("brands", brandList);
-        request.setAttribute("stores", storeList);
-        request.setAttribute("suppliers", supplierList);
-        request.setAttribute("chocolate", chocolateDTO);
+        request.setAttribute(BRANDS, brandList);
+        request.setAttribute(STORES, storeList);
+        request.setAttribute(SUPPLIERS, supplierList);
+        request.setAttribute(CHOCOLATE, chocolateDTO);
         extractor.extract(request);
-        return "/jsp/edit/editChocolate.jsp";
+        return JSP_EDIT_EDIT_CHOCOLATE_JSP;
     }
 }

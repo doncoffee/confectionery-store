@@ -16,21 +16,24 @@ import by.academy.service.impl.SupplierServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
+import static by.academy.controller.constants.ControllerConstants.*;
+
 public class GoToEditSupplierCommand implements Command {
     private final SupplierService service = new SupplierServiceImpl();
-    private final Extractor<SupplierDTO> extractor = new SupplierExtractor();
+    private final Extractor extractor = new SupplierExtractor();
     private final AddressService addressService = new AddressServiceImpl();
     private final PhoneNumberService phoneNumberService = new PhoneNumberServiceImpl();
+
     @Override
     public String execute(HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter("id"));
+        int id = Integer.parseInt(request.getParameter(ID));
         List<AddressDTO> addressList = addressService.readAllAddresses();
         List<PhoneNumberDTO> phoneNumberList = phoneNumberService.readAllPhoneNumbers();
         SupplierDTO supplierDTO = service.selectSupplierById(id);
-        request.setAttribute("addresses", addressList);
-        request.setAttribute("phoneNumbers", phoneNumberList);
-        request.setAttribute("supplier", supplierDTO);
+        request.setAttribute(ADDRESSES, addressList);
+        request.setAttribute(PHONE_NUMBERS, phoneNumberList);
+        request.setAttribute(SUPPLIER, supplierDTO);
         extractor.extract(request);
-        return "/jsp/edit/editSupplier.jsp";
+        return JSP_EDIT_EDIT_SUPPLIER_JSP;
     }
 }

@@ -8,13 +8,15 @@ import by.academy.service.impl.BrandServiceImpl;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public class BrandExtractor implements Extractor<BrandDTO> {
+import static by.academy.controller.constants.ControllerConstants.*;
+
+public class BrandExtractor implements Extractor {
     private final BrandService service = new BrandServiceImpl();
 
     @Override
     public void extract(HttpServletRequest request) {
-        String pageNumberParam = request.getParameter("currentPage");
-        String itemsPerPageParam = request.getParameter("itemsPerPage");
+        String pageNumberParam = request.getParameter(CURRENT_PAGE);
+        String itemsPerPageParam = request.getParameter(ITEMS_PER_PAGE);
         int pageNumber = pageNumberParam != null
                 ? Integer.parseInt(pageNumberParam) : 1;
         int itemsPerPage = itemsPerPageParam != null
@@ -22,9 +24,9 @@ public class BrandExtractor implements Extractor<BrandDTO> {
         int totalItems = (int) Math.ceil((double)
                 service.getNumberOfRows() / itemsPerPage);
         List<BrandDTO> list = service.findAllByPage(pageNumber, itemsPerPage);
-        request.setAttribute("brands", list);
-        request.setAttribute("currentPage", pageNumber);
-        request.setAttribute("itemsPerPage", itemsPerPage);
-        request.setAttribute("totalItems", totalItems);
+        request.setAttribute(BRANDS, list);
+        request.setAttribute(CURRENT_PAGE, pageNumber);
+        request.setAttribute(ITEMS_PER_PAGE, itemsPerPage);
+        request.setAttribute(TOTAL_ITEMS, totalItems);
     }
 }
