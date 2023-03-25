@@ -19,7 +19,7 @@ import static by.academy.util.constants.Constants.*;
 public class Supplier implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = STORE_ID)
+    @Column(name = SUPPLIER_ID)
     @EqualsAndHashCode.Include
     private Integer id;
     @Column
