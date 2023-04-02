@@ -7,12 +7,16 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.persistence.metamodel.SingularAttribute;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
-import static by.academy.util.constants.Constants.FROM;
-import static by.academy.util.constants.Constants.ID;
+import static by.academy.util.constants.Constants.*;
 
 public class DAOImpl<T> implements DAO<T> {
     private final Class<T> clazz;
@@ -83,7 +87,7 @@ public class DAOImpl<T> implements DAO<T> {
     }
 
     @Override
-    public List<T> findAllByPage(Integer currentPage, Integer itemsPerPage) {
+    public List<T> findAllByPageAndSearch(Integer currentPage, Integer itemsPerPage, String searchQuery) {
         EntityManager em = HibernateUtil.getEntityManager();
         em.getTransaction().begin();
 
@@ -92,6 +96,12 @@ public class DAOImpl<T> implements DAO<T> {
         Root<T> root = criteria.from(clazz);
 
         criteria.select(root);
+
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            Predicate searchPredicate = createSearchPredicate(cb, root, searchQuery);
+            criteria.where(searchPredicate);
+        }
+
         criteria.orderBy(cb.asc(root.get(ID)));
         TypedQuery<T> typedQuery = em.createQuery(criteria);
         int offset = (currentPage - 1) * itemsPerPage;
@@ -105,18 +115,59 @@ public class DAOImpl<T> implements DAO<T> {
     }
 
     @Override
-    public Integer getNumberOfRows() {
+    public Integer getNumberOfRows(String searchQuery) {
         EntityManager em = HibernateUtil.getEntityManager();
         em.getTransaction().begin();
 
         CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<T> criteria = builder.createQuery(clazz);
+        CriteriaQuery<Long> criteria = builder.createQuery(Long.class);
         Root<T> root = criteria.from(clazz);
 
-        Integer size = em.createQuery(criteria).getResultList().size();
+        criteria.select(builder.count(root));
+
+        if (searchQuery != null && !searchQuery.isEmpty()) {
+            Predicate searchPredicate = createSearchPredicate(builder, root, searchQuery);
+            criteria.where(searchPredicate);
+        }
+
+        Long count = em.createQuery(criteria).getSingleResult();
 
         em.getTransaction().commit();
         em.close();
-        return size;
+        return count.intValue();
     }
+
+    /**
+     * Creates a search predicate to search for entities that match any of the given search terms in their
+     * string or number fields.
+     *
+     * @param cb           the criteria builder to use to create the predicates
+     * @param root         the root of the criteria query
+     * @param searchQuery  the search query containing the search terms
+     * @return a predicate that can be used to filter entities based on the search terms
+     */
+    private Predicate createSearchPredicate(CriteriaBuilder cb, Root<T> root, String searchQuery) {
+        String[] searchTerms = searchQuery.split(REGEX);
+        List<Predicate> searchPredicates = new ArrayList<>();
+        for (String term : searchTerms) {
+            List<Predicate> fieldPredicates = new ArrayList<>();
+            for (SingularAttribute<? super T, ?> attribute : root.getModel().getDeclaredSingularAttributes()) {
+                Class<?> attributeType = attribute.getJavaType();
+                if (attributeType.equals(String.class)) {
+                    fieldPredicates.add(cb.like(cb.lower(root.get(attribute.getName())),
+                            LIKE_EXPRESSION + term.toLowerCase() + LIKE_EXPRESSION));
+                } else if (Number.class.isAssignableFrom(attributeType)) {
+                    try {
+                        Number number = NumberFormat.getInstance().parse(term);
+                        fieldPredicates.add(cb.equal(root.get(attribute.getName()), number));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            searchPredicates.add(cb.or(fieldPredicates.toArray(new Predicate[0])));
+        }
+        return cb.and(searchPredicates.toArray(new Predicate[0]));
+    }
+
 }

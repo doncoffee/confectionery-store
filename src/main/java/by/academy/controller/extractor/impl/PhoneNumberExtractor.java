@@ -15,6 +15,7 @@ public class PhoneNumberExtractor implements Extractor {
 
     @Override
     public void extract(HttpServletRequest request) {
+        String searchResult = request.getParameter(SEARCH);
         String pageNumberParam = request.getParameter(CURRENT_PAGE);
         String itemsPerPageParam = request.getParameter(ITEMS_PER_PAGE);
         int pageNumber = pageNumberParam != null
@@ -23,11 +24,12 @@ public class PhoneNumberExtractor implements Extractor {
                 ? Integer.parseInt(itemsPerPageParam) : 3;
 
         int totalItems = (int) Math.ceil((double)
-                service.getNumberOfRows() / itemsPerPage);
+                service.getNumberOfRows(searchResult) / itemsPerPage);
 
-        List<PhoneNumberDTO> list = service.findAllByPage(pageNumber,
-                itemsPerPage);
+        List<PhoneNumberDTO> list = service.findAllByPageAndSearch(pageNumber,
+                itemsPerPage, searchResult);
         request.setAttribute(PHONE_NUMBERS, list);
+        request.setAttribute(SEARCH, searchResult);
         request.setAttribute(CURRENT_PAGE, pageNumber);
         request.setAttribute(ITEMS_PER_PAGE, itemsPerPage);
         request.setAttribute(TOTAL_ITEMS, totalItems);

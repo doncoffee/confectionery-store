@@ -15,7 +15,7 @@ public interface CookieService {
 
     CookieDTO selectCookieById(int id);
 
-    List<CookieDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+    List<CookieDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult);
 
-    Integer getNumberOfRows();
+    Integer getNumberOfRows(String searchResult);
 }

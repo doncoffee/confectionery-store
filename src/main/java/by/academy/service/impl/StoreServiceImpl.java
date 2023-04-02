@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class StoreServiceImpl implements StoreService {
-    private Mapper<Store, StoreDTO> mapper = new StoreMapper();
+    private final Mapper<Store, StoreDTO> mapper = new StoreMapper();
     private final DAO<Store> dao = new StoreDAOImpl();
 
     @Override
@@ -25,7 +25,7 @@ public class StoreServiceImpl implements StoreService {
     public List<StoreDTO> readAllStores() {
         return dao.read()
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -47,15 +47,15 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<StoreDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
-        return dao.findAllByPage(currentPage, recordsPerPage)
+    public List<StoreDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult) {
+        return dao.findAllByPageAndSearch(currentPage, recordsPerPage, searchResult)
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Integer getNumberOfRows() {
-        return dao.getNumberOfRows();
+    public Integer getNumberOfRows(String searchResult) {
+        return dao.getNumberOfRows(searchResult);
     }
 }

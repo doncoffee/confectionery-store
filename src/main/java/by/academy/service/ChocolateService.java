@@ -15,7 +15,7 @@ public interface ChocolateService {
 
     ChocolateDTO selectChocolateById(int id);
 
-    List<ChocolateDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+    List<ChocolateDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult);
 
-    Integer getNumberOfRows();
+    Integer getNumberOfRows(String searchResult);
 }

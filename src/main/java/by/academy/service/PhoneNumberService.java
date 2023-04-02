@@ -15,7 +15,7 @@ public interface PhoneNumberService {
 
     PhoneNumberDTO selectPhoneNumberById(int id);
 
-    List<PhoneNumberDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+    List<PhoneNumberDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult);
 
-    Integer getNumberOfRows();
+    Integer getNumberOfRows(String searchResult);
 }

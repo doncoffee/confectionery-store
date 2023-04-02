@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class BrandServiceImpl implements BrandService {
-    private Mapper<Brand, BrandDTO> mapper = new BrandMapper();
+    private final Mapper<Brand, BrandDTO> mapper = new BrandMapper();
     private final DAO<Brand> dao = new BrandDAOImpl();
 
     @Override
@@ -25,7 +25,7 @@ public class BrandServiceImpl implements BrandService {
     public List<BrandDTO> readAllBrands() {
         return dao.read()
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -47,15 +47,15 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public List<BrandDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
-        return dao.findAllByPage(currentPage, recordsPerPage)
+    public List<BrandDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult) {
+        return dao.findAllByPageAndSearch(currentPage, recordsPerPage, searchResult)
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Integer getNumberOfRows() {
-        return dao.getNumberOfRows();
+    public Integer getNumberOfRows(String searchResult) {
+        return dao.getNumberOfRows(searchResult);
     }
 }

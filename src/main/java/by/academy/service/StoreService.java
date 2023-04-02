@@ -15,7 +15,7 @@ public interface StoreService {
 
     StoreDTO selectStoreById(int id);
 
-    List<StoreDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+    List<StoreDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult);
 
-    Integer getNumberOfRows();
+    Integer getNumberOfRows(String searchResult);
 }

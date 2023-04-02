@@ -11,10 +11,10 @@ import java.util.List;
 import static by.academy.controller.constants.ControllerConstants.*;
 
 public class AddressExtractor implements Extractor {
-
     private final AddressService service = new AddressServiceImpl();
     @Override
     public void extract(HttpServletRequest request) {
+        String searchResult = request.getParameter(SEARCH);
         String pageNumberParam = request.getParameter(CURRENT_PAGE);
         String itemsPerPageParam = request.getParameter(ITEMS_PER_PAGE);
         int pageNumber = pageNumberParam != null
@@ -22,9 +22,11 @@ public class AddressExtractor implements Extractor {
         int itemsPerPage = itemsPerPageParam != null
                 ? Integer.parseInt(itemsPerPageParam) : 3;
         int totalItems = (int) Math.ceil((double)
-                service.getNumberOfRows() / itemsPerPage);
-        List<AddressDTO> list = service.findAllByPage(pageNumber, itemsPerPage);
+                service.getNumberOfRows(searchResult) / itemsPerPage);
+        List<AddressDTO> list = service.findAllByPageAndSearch(pageNumber,
+                itemsPerPage, searchResult);
         request.setAttribute(ADDRESSES, list);
+        request.setAttribute(SEARCH, searchResult);
         request.setAttribute(CURRENT_PAGE, pageNumber);
         request.setAttribute(ITEMS_PER_PAGE, itemsPerPage);
         request.setAttribute(TOTAL_ITEMS, totalItems);

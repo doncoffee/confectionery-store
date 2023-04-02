@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SupplierServiceImpl implements SupplierService {
-    private Mapper<Supplier, SupplierDTO> mapper = new SupplierMapper();
+    private final Mapper<Supplier, SupplierDTO> mapper = new SupplierMapper();
     private final DAO<Supplier> dao = new SupplierDAOImpl();
 
     @Override
@@ -25,7 +25,7 @@ public class SupplierServiceImpl implements SupplierService {
     public List<SupplierDTO> readAllSuppliers() {
         return dao.read()
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -47,15 +47,15 @@ public class SupplierServiceImpl implements SupplierService {
     }
 
     @Override
-    public List<SupplierDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
-        return dao.findAllByPage(currentPage, recordsPerPage)
+    public List<SupplierDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult) {
+        return dao.findAllByPageAndSearch(currentPage, recordsPerPage, searchResult)
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Integer getNumberOfRows() {
-        return dao.getNumberOfRows();
+    public Integer getNumberOfRows(String searchResult) {
+        return dao.getNumberOfRows(searchResult);
     }
 }

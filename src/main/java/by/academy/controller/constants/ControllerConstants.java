@@ -61,4 +61,5 @@ public class ControllerConstants {
     public static final String JSP_EDIT_EDIT_SWEETS_JSP = "/jsp/edit/editSweets.jsp";
     public static final String COMMAND = "command";
     public static final String HOME = "/home";
+    public static final String SEARCH = "search";
 }

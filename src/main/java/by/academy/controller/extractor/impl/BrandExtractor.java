@@ -15,6 +15,7 @@ public class BrandExtractor implements Extractor {
 
     @Override
     public void extract(HttpServletRequest request) {
+        String searchResult = request.getParameter(SEARCH);
         String pageNumberParam = request.getParameter(CURRENT_PAGE);
         String itemsPerPageParam = request.getParameter(ITEMS_PER_PAGE);
         int pageNumber = pageNumberParam != null
@@ -22,9 +23,11 @@ public class BrandExtractor implements Extractor {
         int itemsPerPage = itemsPerPageParam != null
                 ? Integer.parseInt(itemsPerPageParam) : 3;
         int totalItems = (int) Math.ceil((double)
-                service.getNumberOfRows() / itemsPerPage);
-        List<BrandDTO> list = service.findAllByPage(pageNumber, itemsPerPage);
+                service.getNumberOfRows(searchResult) / itemsPerPage);
+        List<BrandDTO> list = service.findAllByPageAndSearch(pageNumber,
+                itemsPerPage, searchResult);
         request.setAttribute(BRANDS, list);
+        request.setAttribute(SEARCH, searchResult);
         request.setAttribute(CURRENT_PAGE, pageNumber);
         request.setAttribute(ITEMS_PER_PAGE, itemsPerPage);
         request.setAttribute(TOTAL_ITEMS, totalItems);
