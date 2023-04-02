@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class SweetsServiceImpl implements SweetsService {
-    private Mapper<Sweets, SweetsDTO> mapper = new SweetsMapper();
+    private final Mapper<Sweets, SweetsDTO> mapper = new SweetsMapper();
     private final DAO<Sweets> dao = new SweetsDAOImpl();
 
     @Override
@@ -25,7 +25,7 @@ public class SweetsServiceImpl implements SweetsService {
     public List<SweetsDTO> readAllSweets() {
         return dao.read()
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -47,15 +47,15 @@ public class SweetsServiceImpl implements SweetsService {
     }
 
     @Override
-    public List<SweetsDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
-        return dao.findAllByPage(currentPage, recordsPerPage)
+    public List<SweetsDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult) {
+        return dao.findAllByPageAndSearch(currentPage, recordsPerPage, searchResult)
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Integer getNumberOfRows() {
-        return dao.getNumberOfRows();
+    public Integer getNumberOfRows(String searchResult) {
+        return dao.getNumberOfRows(searchResult);
     }
 }

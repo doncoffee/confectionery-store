@@ -15,7 +15,7 @@ public interface AddressService {
 
     AddressDTO selectAddressById(int id);
 
-    List<AddressDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+    List<AddressDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult);
 
-    Integer getNumberOfRows();
+    Integer getNumberOfRows(String searchResult);
 }

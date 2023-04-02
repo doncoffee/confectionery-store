@@ -15,7 +15,7 @@ public interface SupplierService {
 
     SupplierDTO selectSupplierById(int id);
 
-    List<SupplierDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+    List<SupplierDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult);
 
-    Integer getNumberOfRows();
+    Integer getNumberOfRows(String searchResult);
 }

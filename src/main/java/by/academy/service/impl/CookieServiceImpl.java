@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class CookieServiceImpl implements CookieService {
-    private Mapper<Cookie, CookieDTO> mapper = new CookieMapper();
+    private final Mapper<Cookie, CookieDTO> mapper = new CookieMapper();
     private final DAO<Cookie> dao = new CookieDAOImpl();
 
     @Override
@@ -25,7 +25,7 @@ public class CookieServiceImpl implements CookieService {
     public List<CookieDTO> readAllCookies() {
         return dao.read()
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -47,15 +47,15 @@ public class CookieServiceImpl implements CookieService {
     }
 
     @Override
-    public List<CookieDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
-        return dao.findAllByPage(currentPage, recordsPerPage)
+    public List<CookieDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult) {
+        return dao.findAllByPageAndSearch(currentPage, recordsPerPage, searchResult)
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Integer getNumberOfRows() {
-        return dao.getNumberOfRows();
+    public Integer getNumberOfRows(String searchResult) {
+        return dao.getNumberOfRows(searchResult);
     }
 }

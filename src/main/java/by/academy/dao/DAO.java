@@ -13,7 +13,7 @@ public interface DAO<T> {
 
     T selectById(int id);
 
-    List<T> findAllByPage(Integer currentPage, Integer itemsPerPage);
+    List<T> findAllByPageAndSearch(Integer currentPage, Integer itemsPerPage, String searchQuery);
 
-    Integer getNumberOfRows();
+    Integer getNumberOfRows(String searchQuery);
 }

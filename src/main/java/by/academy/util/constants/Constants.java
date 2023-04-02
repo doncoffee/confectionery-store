@@ -20,6 +20,7 @@ public class Constants {
     public static final String SWEETS_ID = "sweets_id";
     public static final String SWEETS = "sweets";
     public static final String PERSISTENCE_UNIT_NAME = "confectionery-store";
-
     public static final String PHONE_NUMBER_TABLE_NAME = "phone_number";
+    public static final String LIKE_EXPRESSION = "%";
+    public static final String REGEX = " ";
 }

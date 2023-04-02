@@ -15,7 +15,7 @@ public interface BrandService {
 
     BrandDTO selectBrandById(int id);
 
-    List<BrandDTO> findAllByPage(Integer currentPage, Integer recordsPerPage);
+    List<BrandDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult);
 
-    Integer getNumberOfRows();
+    Integer getNumberOfRows(String searchResult);
 }

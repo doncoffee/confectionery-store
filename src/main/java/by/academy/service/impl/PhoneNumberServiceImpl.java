@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PhoneNumberServiceImpl implements PhoneNumberService {
-    private Mapper<PhoneNumber, PhoneNumberDTO> mapper = new PhoneNumberMapper();
+    private final Mapper<PhoneNumber, PhoneNumberDTO> mapper = new PhoneNumberMapper();
     private final DAO<PhoneNumber> dao = new PhoneNumberDAOImpl();
 
     @Override
@@ -25,7 +25,7 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     public List<PhoneNumberDTO> readAllPhoneNumbers() {
         return dao.read()
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
@@ -47,15 +47,15 @@ public class PhoneNumberServiceImpl implements PhoneNumberService {
     }
 
     @Override
-    public List<PhoneNumberDTO> findAllByPage(Integer currentPage, Integer recordsPerPage) {
-        return dao.findAllByPage(currentPage, recordsPerPage)
+    public List<PhoneNumberDTO> findAllByPageAndSearch(Integer currentPage, Integer recordsPerPage, String searchResult) {
+        return dao.findAllByPageAndSearch(currentPage, recordsPerPage, searchResult)
                 .stream()
-                .map(map ->mapper.mapToDTO(map))
+                .map(mapper::mapToDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Integer getNumberOfRows() {
-        return dao.getNumberOfRows();
+    public Integer getNumberOfRows(String searchResult) {
+        return dao.getNumberOfRows(searchResult);
     }
 }
