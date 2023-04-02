@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="add-tag-1.0.0" author="doncoffee">
+        <tagDatabase tag="v.1.0.0"/>
+    </changeSet>
+    <include file="create_address_table.xml" relativeToChangelogFile="true"/>
+    <include file="create_phone_number_table.xml" relativeToChangelogFile="true"/>
+    <include file="create_brand_table.xml" relativeToChangelogFile="true"/>
+    <include file="create_store_table.xml" relativeToChangelogFile="true"/>
+    <include file="create_supplier_table.xml" relativeToChangelogFile="true"/>
+    <include file="create_chocolate_table.xml" relativeToChangelogFile="true"/>
+    <include file="create_cookie_table.xml" relativeToChangelogFile="true"/>
+    <include file="create_sweets_table.xml" relativeToChangelogFile="true"/>
+    <include file="insert_values_into_all_tables.xml" relativeToChangelogFile="true"/>
+
+</databaseChangeLog>

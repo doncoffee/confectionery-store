@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-supplier-table-liquibase" author="doncoffee">
+        <createTable tableName="supplier">
+            <column name="supplier_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="contactPerson" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="address_id" type="int">
+                <constraints nullable="true" foreignKeyName="FK95a8oipih48obtbhltjy7hgvb"
+                             referencedTableName="address" referencedColumnNames="address_id"/>
+            </column>
+            <column name="phone_number_id" type="int">
+                <constraints nullable="true" foreignKeyName="FK5crfmc9tl15gc3lekojuewrje"
+                             referencedTableName="phone_number" referencedColumnNames="phone_number_id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

@@ -1,9 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="by.academy.controller.CommandInvoker " %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ page isELIgnored="false"%>
 <html>
 <head>
-    <title>Confectionery store</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <title>Edit phone number</title>
+    <link rel="stylesheet" href="./../../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 <div class="header">
@@ -17,23 +20,23 @@
     <a href="home?command=read_address">Addresses</a>
     <a href="home?command=read_phone_number">Contacts</a>
 </div>
-<div class="catalog-name">
-    <h1>Product catalog</h1>
-</div>
-
-<div class="catalog">
-    <a class="item" href="home?command=read_chocolate">
-        <img src="./images/shocolate.png" alt="">
-        <span>Chocolate</span>
-    </a>
-    <a class="item" href="home?command=read_cookie">
-        <img src="./images/cookie.png" alt="">
-        <span>Cookies</span>
-    </a>
-    <a class="item" href="home?command=read_sweets">
-        <img src="./images/candies.png" alt="">
-        <span>Sweets</span>
-    </a>
+<div class="block">
+    <h2 class="catalog-name">Edit phone number</h2>
+    <form method="post" action="home">
+        <input type="hidden" name="command" value="update_phone_number">
+        <input type="hidden" name="id" value=${requestScope.phoneNumber.id}>
+        <input type="hidden" name="itemsPerPage" value="${requestScope.itemsPerPage}">
+        <input type="hidden" name="currentPage" value="${requestScope.currentPage}">
+        <div>
+            <label class="input">Number:
+                <div>
+                    <input class="input form-control" id="numberInput" placeholder="Enter number" type="text" name="number" value="${requestScope.phoneNumber.number}">
+                </div>
+            </label>
+        </div>
+        <button class="btn btn-default" type="submit" name="command" value="update_phone_number">UPDATE PHONE NUMBER</button>
+        <button class="btn btn-default" type="submit" name="command" value="update_phone_number">CANCEL</button>
+    </form>
 </div>
 <footer class="footer">
     <div class="wrap wrap__footer">

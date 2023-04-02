@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-sweets-table-liquibase" author="doncoffee">
+        <createTable tableName="sweets">
+            <column name="sweets_id" type="int" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="composition" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="price" type="double">
+                <constraints nullable="true"/>
+            </column>
+            <column name="type" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="weight" type="double">
+                <constraints nullable="true"/>
+            </column>
+            <column name="brand_id" type="int">
+                <constraints nullable="true" foreignKeyName="FKjc8m2tlgmwtosrldy8istulj0"
+                             referencedTableName="brand" referencedColumnNames="brand_id"/>
+            </column>
+            <column name="store_id" type="int">
+                <constraints nullable="true" foreignKeyName="FKnlk15bd7pxoutxl07ctdoh3t6"
+                             referencedTableName="store" referencedColumnNames="store_id"/>
+            </column>
+            <column name="supplier_id" type="int">
+                <constraints nullable="true" foreignKeyName="FK3cto5qsqu5o54kk0ec4bgs4jh"
+                             referencedTableName="supplier" referencedColumnNames="supplier_id"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
